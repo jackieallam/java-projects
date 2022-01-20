@@ -1,15 +1,13 @@
 package bankaccountapp;
 
-import java.util.Random;
-
 public abstract class Account implements IBaseRate {
 	// List common properties for savings and checking accounts
 	private String clientName;
 	private String clientSSN;
 	private double balance;
 
-	String accountNumber;
-	private double rate;
+	protected String accountNumber;
+	protected double rate;
 	private static int unique5Digits = 10000;
 
 	// Constructor to set base properties and initialize the account
@@ -18,10 +16,10 @@ public abstract class Account implements IBaseRate {
 		this.clientSSN = ssn;
 		this.balance = depositAmt;
 		
-//		System.out.println("Name: " + clientName + " SSN: " + clientSSN + " Balance: $" + balance);
-		
 		// Set account number
 		this.accountNumber = setAccountNumber();
+		
+		setRate();
 	}
 
 	private String setAccountNumber() {
@@ -30,19 +28,55 @@ public abstract class Account implements IBaseRate {
 		// Unique 5-digit number
 		unique5Digits++;
 		// Random 3-digit number
-		Random rand = new Random();
-		String random3Digits = String.format("%03d", rand.nextInt(1000));
+		String random3Digits = randomNumbers(3);
 		return last2SSN + unique5Digits + random3Digits;
 	}
+	
+	public void compound() {
+		double accruedInterest = balance * (rate/100);
+		balance += accruedInterest;
+		System.out.println("Accruied Interest $" + accruedInterest);
+		printBalance();
+	}
 
-	// List common methods:
-	// deposit()
-	// withdraw()
-	// transfer()
-	 public void showInfo() {
-		 System.out.println("\nName: " + this.clientName + 
+	// Common transaction methods:
+	
+	public void deposit(double amount) {
+		this.balance += amount;
+		System.out.println("Depositing $" + amount);
+		printBalance();
+	}
+	 
+	public void withdraw(double amount) {
+		this.balance -= amount;
+		System.out.println("Withdrawing $" + amount);
+		printBalance();
+	}
+	
+	public void transfer(String toWhere, double amount) {
+		this.balance -= amount;
+		System.out.println("Transferring $" + amount + " to " + toWhere);
+		printBalance();
+	}
+	
+	public void  printBalance() {
+		System.out.println("Your balance is now: $" + balance);
+	}
+
+	public void showInfo() {
+		 System.out.println("Name: " + this.clientName + 
 				 "\nAccount Number: " + accountNumber + 
-				 "\nBalance: $" + balance);
-		
-	 }
+				 "\nBalance: $" + balance +
+				 "\nInterest Rate: " + rate + "%");
+	}
+	
+	public abstract void setRate();
+	
+	public String randomNumbers(int numOfDigits) {
+    		int number =  (int)(Math.random() * Math.pow(10, numOfDigits));
+    		String digits = Integer.toString(number);
+    		while(digits.length() != numOfDigits)
+    		{ 	digits = "0" + digits;	}
+    		return digits;
+    } 
 }

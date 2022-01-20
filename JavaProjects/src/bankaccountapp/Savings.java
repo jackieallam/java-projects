@@ -3,19 +3,35 @@ package bankaccountapp;
 public class Savings extends Account {
 	// List properties specific to Savings account:
 	
+	private static int boxIndex = 0;
 	private int depositBoxNum;  // Safety Deposit Box (3-digit number)
-	private int accessCode;  // 4-digit access code
-	
+	private String accessCode;  // 4-digit access code
+		
 	// Constructor to initialize Savings account properties
 	public Savings(String name, String ssn, double initDeposit) {
 		super(name, ssn, initDeposit);
 		accountNumber = "1" + accountNumber;
-//		System.out.println("New Savings account");
-//		System.out.println("Acc no: " + accountNumber);
-
+		createDepositBox();
 	}
-	// List any methods specific to Savings account
+
+	// Methods specific to Savings account:
 	
-//	public void showInfo() {
-//	}
+	// Polymorphism -> this method is overriding the inherited one
+	public void showInfo() {
+		System.out.println("Account Type: Savings");
+		super.showInfo();
+		System.out.println("Deposit Box: " + depositBoxNum +
+				"\nAccess Code: " + accessCode);
+	}
+	
+	private void createDepositBox() {
+		boxIndex++;
+		this.depositBoxNum = boxIndex;
+		accessCode = super.randomNumbers(4);
+	}
+
+	@Override
+	public void setRate() {
+		rate = getBaseRate() - 0.25;
+	}
 }
