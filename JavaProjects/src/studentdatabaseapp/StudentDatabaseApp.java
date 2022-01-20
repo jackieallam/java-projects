@@ -7,24 +7,36 @@ public class StudentDatabaseApp {
 
 	public static void main(String[] args) {
 		
-//		Student st = new Student();
-		
 		// Ask how many students to add
 		System.out.println("How many students do you wish to add? \n");
 		Scanner in = new Scanner(System.in);
-		int num = in.nextInt();
+		int numOfStudents = in.nextInt();
 //		in.close();
 		
-		// Create n number of students
-		Student.addStudents(num);
+		ArrayList<Student> allStudents = new ArrayList<Student>();
 		
-		// Call show student (specific student) ?
-		
+		for (int i=0; i<numOfStudents; i++) {
+			Student stu = new Student();
+			stu.enroll();
+			stu.payTuition();
+//			System.out.println(stu.toString());
+			allStudents.add(stu);
+		}
+	
 		// Call show all students
-		Student.listStudents();
-//		Student.listCourses();
-		
-   
+		listStudents(allStudents);
+  
     }
 
+	// Method: Show all students enrolled
+	public static void listStudents(ArrayList<Student> students) {
+        
+        for (Student student : students) {
+        	System.out.println(student);
+        }
+	}
+
 }
+
+
+// Call show student (specific student) ?

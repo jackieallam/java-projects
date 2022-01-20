@@ -1,6 +1,6 @@
 package studentdatabaseapp;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
@@ -15,7 +15,7 @@ public class Student {
 	private int tuitionBalance;
 	private static int costOfCourse = 600;
 	private static int id = 1000;
-	private static ArrayList<Student> students = new ArrayList<Student>();
+//	private static ArrayList<Student> students = new ArrayList<Student>();
 	private static TreeMap<Integer, String> availableCourses = new TreeMap<>() {{ 
 		put(1, "History 101");
 		put(2, "Mathematics 101");
@@ -46,24 +46,17 @@ public class Student {
 //		in.close();
 		this.studentID = generateStudentID();
 		
-		enroll();
-		payTuition();
-		showStatus();
+//		enroll();
+//		payTuition();
+//		showStatus();  --> changed to print toString()
 		
 	}
 	
 	// Generate a 5-digit unique ID, beginning with their grade level
 	private String generateStudentID() {
-//		return id + gradeYear * 10000;
+//		return id + gradeYear * 10000;  --> Another way to generate the Student ID
 		id++;
 		return gradeYear + "" + id;
-	}
-	
-	// Static Method: Add n number of students 
-	public static void addStudents(int number) {
-		for (int i=0; i<number; i++) {
-			students.add(new Student());
-		}
 	}
 	
 	// Method: Enroll in courses
@@ -93,7 +86,6 @@ public class Student {
 		for (String course : courses) {
 			System.out.println(course);
 		}
-//		System.out.println("\nThe Tuition balance is: $" + tuitionBalance);
 	}
 	
 	// Method: show balance and pay tuition
@@ -115,23 +107,6 @@ public class Student {
 		}
 	}
 	
-	// Method: Show status of student
-	public void showStatus() {
-//		name, id, courses, balance
-		System.out.println("\n\nNAME: " + this.name +
-		"\nSTUDENT ID: " + this.studentID + 
-		"\nCOURSES ENROLLED: " + this.courses +
-		"\nTUITION BALANCE: " + this.tuitionBalance);
-		
-	}
-	
-	// Method: Show all students enrolled
-	public static void listStudents() {
-        
-        for (Student student : students) {
-        	System.out.println(student);
-        }
-	}
 	public static void listCourses() {
         
         for (Map.Entry<Integer, String> course : availableCourses.entrySet()) {
@@ -139,10 +114,13 @@ public class Student {
         }
 	}
 
+	// Method: Show status of student
 	@Override
 	public String toString() {
-		return "Student [name=" + name + ", gradeYear=" + gradeYear + ", studentID=" + studentID + ", courses="
-				+ courses + ", tuitionBalance=" + tuitionBalance + "]";
+		return "\n\nNAME: " + this.name +
+				"\nSTUDENT ID: " + this.studentID + 
+				"\nCOURSES ENROLLED: " + this.courses +
+				"\nTUITION BALANCE: " + this.tuitionBalance;
 	}
 
 }
